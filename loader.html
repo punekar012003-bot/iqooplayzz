@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>IQOOPlayZz Loader</title>
+
+<style>
+body{
+  background:black;
+  color:red;
+  font-family:Arial;
+  text-align:center;
+  padding-top:120px;
+}
+
+#box{
+  border:2px solid red;
+  width:300px;
+  margin:auto;
+  padding:25px;
+  border-radius:10px;
+}
+
+button{
+  background:red;
+  color:black;
+  border:none;
+  padding:10px 20px;
+  border-radius:5px;
+  margin:10px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="box">
+
+<h2>🚀 Loading BGMI...</h2>
+
+<p id="time">Please wait...</p>
+
+<button onclick="startGame()">START GAME</button>
+
+<br>
+
+<div id="boost" style="display:none;">
+
+<h3>Boost Your Game?</h3>
+
+<button onclick="boostYes()">YES (Boost + 120FPS)</button>
+<button onclick="boostNo()">NO (Normal)</button>
+<button onclick="boostCancel()">CANCEL</button>
+
+</div>
+
+</div>
+
+<script>
+
+if(localStorage.getItem("login")!="yes"){
+  location="index.html";
+}
+
+let sec = 5;
+
+let timer = setInterval(()=>{
+
+  document.getElementById("time").innerText =
+  "Starting in "+sec+" seconds...";
+
+  sec--;
+
+  if(sec<0){
+    clearInterval(timer);
+    document.getElementById("time").innerText="Ready!";
+  }
+
+},1000);
+
+
+function startGame(){
+
+  alert("BGMI Opened 🚀 (Demo)");
+
+  document.getElementById("boost").style.display="block";
+
+}
+
+
+function boostYes(){
+  alert("Boost + 120FPS Activated 🔥");
+}
+
+function boostNo(){
+  alert("Normal Mode Activated 👍");
+}
+
+function boostCancel(){
+  alert("Cancelled ❌");
+}
+
+</script>
+
+</body>
+</html>

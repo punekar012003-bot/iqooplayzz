@@ -1,0 +1,190 @@
+<script type="module">
+
+// Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAMDsluMrIf0MasRLs30ZGU_zZPiorfL9Q",
+  authDomain: "iqooplayzz-e33a6.firebaseapp.com",
+  databaseURL: "https://iqooplayzz-e33a6-default-rtdb.firebaseio.com",
+  projectId: "iqooplayzz-e33a6",
+  storageBucket: "iqooplayzz-e33a6.appspot.com",
+  messagingSenderId: "198175037767",
+  appId: "1:198175037767:web:bf87abcf2b68ad07c45462"
+};
+
+// Init
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Login Function
+window.checkKey = function(){
+
+  let key = document.getElementById("key").value;
+
+  if(key==""){
+    alert("Enter Key First");
+    return;
+  }
+
+  const keyRef = ref(db,"keys/"+key);
+
+  get(keyRef).then((snapshot)=>{
+
+    if(snapshot.exists()){
+
+      // Valid Key
+      localStorage.setItem("login","yes");
+
+      // Redirect Loader
+      window.location="loader.html";
+
+    }else{
+
+      alert("Invalid Key ❌");
+
+    }
+
+  });
+
+}
+
+</script>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>IQOOPlayZz Admin</title>
+
+<style>
+body{
+  background:black;
+  color:red;
+  font-family:Arial;
+  text-align:center;
+  padding-top:100px;
+}
+
+input{
+  padding:10px;
+  width:250px;
+  border:none;
+  border-radius:5px;
+}
+
+button{
+  padding:10px 20px;
+  background:red;
+  color:black;
+  border:none;
+  border-radius:5px;
+  margin-top:15px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 Admin Panel 🔥</h1>
+
+<div id="login">
+
+<input type="text" id="user" placeholder="Username"><br><br>
+<input type="password" id="pass" placeholder="Password"><br>
+
+<button onclick="adminLogin()">LOGIN</button>
+
+</div>
+
+
+<div id="panel" style="display:none;">
+
+<h2>Key Generator</h2>
+
+<input type="text" id="key" placeholder="Enter New Key"><br>
+
+<button onclick="saveKey()">SAVE KEY</button>
+
+<p id="msg"></p>
+
+</div>
+
+
+<!-- Firebase -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAMDsluMrIf0MasRLs30ZGU_zZPiorfL9Q",
+  authDomain: "iqooplayzz-e33a6.firebaseapp.com",
+  databaseURL: "https://iqooplayzz-e33a6-default-rtdb.firebaseio.com",
+  projectId: "iqooplayzz-e33a6",
+  storageBucket: "iqooplayzz-e33a6.appspot.com",
+  messagingSenderId: "198175037767",
+  appId: "1:198175037767:web:bf87abcf2b68ad07c45462"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+window.adminLogin = function(){
+
+  let u = user.value;
+  let p = pass.value;
+
+  if(u=="IQOOPlayZz" && p=="IQOO@20"){
+
+    login.style.display="none";
+    panel.style.display="block";
+
+  }else{
+
+    alert("Wrong Admin ❌");
+
+  }
+
+}
+
+
+window.saveKey = function(){
+
+  let key = document.getElementById("key").value;
+  let days = prompt("Enter Days (7 / 30)");
+
+  if(key=="" || days==""){
+    alert("Fill All");
+    return;
+  }
+
+  let expiry = Date.now() + (days * 24 * 60 * 60 * 1000);
+
+  set(ref(db,"keys/"+key),{
+    active:true,
+    created:Date.now(),
+    expiry: expiry
+  });
+
+  msg.innerText="Key Saved for "+days+" Days ✅";
+
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+

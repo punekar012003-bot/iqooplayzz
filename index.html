@@ -1,0 +1,59 @@
+<script type="module">
+
+// Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAMDsluMrIf0MasRLs30ZGU_zZPiorfL9Q",
+  authDomain: "iqooplayzz-e33a6.firebaseapp.com",
+  databaseURL: "https://iqooplayzz-e33a6-default-rtdb.firebaseio.com",
+  projectId: "iqooplayzz-e33a6",
+  storageBucket: "iqooplayzz-e33a6.appspot.com",
+  messagingSenderId: "198175037767",
+  appId: "1:198175037767:web:bf87abcf2b68ad07c45462"
+};
+
+// Init
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Login Function
+window.checkKey = function(){
+
+  let key = document.getElementById("key").value;
+
+  if(key==""){
+    alert("Enter Key First");
+    return;
+  }
+
+  const keyRef = ref(db,"keys/"+key);
+
+  get(keyRef).then((snapshot)=>{
+
+    if(snapshot.exists()){
+
+      // Valid Key
+      localStorage.setItem("login","yes");
+
+      // Redirect Loader
+      window.location="loader.html";
+
+    }else{
+
+      alert("Invalid Key ❌");
+
+    }
+
+  });
+
+}
+
+</script>
+
+
+<input type="text" id="key" placeholder="Enter Key">
+<br><br>
+<button onclick="checkKey()">Login</button>
