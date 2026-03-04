@@ -1,59 +1,73 @@
-<script type="module">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IQOOPlayZz Login</title>
 
-// Firebase SDK
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  <script type="module">
 
-// Config
-const firebaseConfig = {
-  apiKey: "AIzaSyAMDsluMrIf0MasRLs30ZGU_zZPiorfL9Q",
-  authDomain: "iqooplayzz-e33a6.firebaseapp.com",
-  databaseURL: "https://iqooplayzz-e33a6-default-rtdb.firebaseio.com",
-  projectId: "iqooplayzz-e33a6",
-  storageBucket: "iqooplayzz-e33a6.appspot.com",
-  messagingSenderId: "198175037767",
-  appId: "1:198175037767:web:bf87abcf2b68ad07c45462"
-};
+    // Firebase Import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-// Init
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+    // 🔴 तुझा Firebase Config (तू दिलेला)
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMDsluMrIf0MasRLs30ZGU_zZPiorfL9Q",
+      authDomain: "iqooplayzz-e33a6.firebaseapp.com",
+      projectId: "iqooplayzz-e33a6",
+      storageBucket: "iqooplayzz-e33a6.firebasestorage.app",
+      messagingSenderId: "198175037767",
+      appId: "1:198175037767:web:bf87abcf2b68ad07c45462"
+    };
 
-// Login Function
-window.checkKey = function(){
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-  let key = document.getElementById("key").value;
+    // Login Function
+    window.login = function () {
 
-  if(key==""){
-    alert("Enter Key First");
-    return;
-  }
+      let key = document.getElementById("key").value;
 
-  const keyRef = ref(db,"keys/"+key);
+      if (key === "") {
+        alert("Key टाक भाऊ!");
+        return;
+      }
 
-  get(keyRef).then((snapshot)=>{
+      const keyRef = ref(db, "keys/" + key);
 
-    if(snapshot.exists()){
+      get(keyRef).then((snapshot) => {
 
-      // Valid Key
-      localStorage.setItem("login","yes");
+        if (snapshot.exists()) {
 
-      // Redirect Loader
-      window.location="loader.html";
+          alert("Login Success ✅");
+          window.location.href = "loader.html";
 
-    }else{
+        } else {
 
-      alert("Invalid Key ❌");
+          alert("Wrong Key ❌");
+
+        }
+
+      });
 
     }
 
-  });
+  </script>
 
-}
+</head>
 
-</script>
+<body style="background:black;color:red;text-align:center;font-family:sans-serif">
 
+  <h1>🔥 IQOOPlayZz Booster 🔥</h1>
 
-<input type="text" id="key" placeholder="Enter Key">
-<br><br>
-<button onclick="checkKey()">Login</button>
+  <br><br>
+
+  <input id="key" placeholder="Enter Your Key"
+    style="padding:10px;width:200px"><br><br>
+
+  <button onclick="login()"
+    style="padding:10px 30px;background:red;color:white;border:none">
+    LOGIN
+  </button>
+
+</body>
+</html>
